@@ -1,0 +1,42 @@
+# Step 1: Kubeadm Reset
+sudo kubeadm reset -f
+
+# Step 2: Kubernetes Files Remove
+sudo rm -rf /etc/kubernetes/
+sudo rm -rf /var/lib/etcd/
+sudo rm -rf /var/lib/kubelet/
+sudo rm -rf $HOME/.kube
+
+# Step 3: CNI Remove
+sudo rm -rf /etc/cni/net.d
+sudo rm -rf /opt/cni/bin
+
+# Step 4: Kubelet, Kubeadm, Kubectl Uninstall
+sudo apt-mark unhold kubelet kubeadm kubectl
+sudo apt purge -y kubelet kubeadm kubectl
+sudo apt autoremove -y
+
+# Step 5: Containerd Remove
+sudo apt purge -y containerd.io
+sudo rm -rf /etc/containerd
+sudo rm -rf /var/lib/containerd
+
+# Step 6: Docker Remove
+sudo apt purge -y docker-ce docker-ce-cli
+sudo rm -rf /var/lib/docker
+
+# Step 7: Kubernetes Repo Remove
+sudo rm -f /etc/apt/sources.list.d/kubernetes.list
+sudo rm -f /etc/apt/sources.list.d/docker.list
+sudo rm -f /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+sudo rm -f /etc/apt/trusted.gpg.d/docker.gpg
+
+# Step 8: Sysctl & Modules Config Remove
+sudo rm -f /etc/sysctl.d/kubernetes.conf
+sudo rm -f /etc/modules-load.d/containerd.conf
+
+# Step 9: Final Cleanup
+sudo apt autoremove -y
+sudo apt update
+
+echo "✅ Cleanup Complete!"
