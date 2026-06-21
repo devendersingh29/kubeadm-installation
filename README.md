@@ -83,6 +83,9 @@ sudo systemctl restart containerd
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 sudo kubeadm init
 ```
+```bash
+sudo kubeadm init
+```
 
 ---
 
